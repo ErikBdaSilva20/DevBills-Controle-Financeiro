@@ -1,8 +1,14 @@
-const Home: React.FC = () => {
-  return;
-  <div>
-    <h1>Welcome to DevBills Frontend</h1>
-  </div>;
-};
+import Button from '../components/Button';
+
+function Home() {
+  return (
+    <div>
+      <Button variant="outline" isLoading>
+        {' '}
+        Clique em mim
+      </Button>
+    </div>
+  );
+}
 
 export default Home;
