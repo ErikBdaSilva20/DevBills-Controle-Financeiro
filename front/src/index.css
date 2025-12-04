@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
 
+
 @theme {
     /* Cores do tema */
     --color-primary-500: #37E359;
@@ -31,3 +32,10 @@
     --font-sans: Inter, system-ui, sans-serif;
 }
 
+@body {
+  @apply bg-gray-900 text-gray-50 min-h-screen font-sans;
+}
+
+.container-app {
+  @apply max-w-7xl mx-auto px-4;
+}
