@@ -1,16 +1,18 @@
 import { BrowserRouter, Route, Routes } from 'react-router';
-import Home from '../pages/Home.tsx';
-import PageNotFound from '../pages/PageNotFound.tsx';
+import Home from '../pages/Home';
+import Login from '../pages/login';
+import PageNotFound from '../pages/PageNotFound';
 
-const appRoutes = () => {
+const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );
 };
 
-export default appRoutes;
+export default AppRoutes;
