@@ -1,8 +1,19 @@
+import { signInWithPopup } from 'firebase/auth';
 import GoogleLoginButton from '../components/GoogleLoginButton';
 
+import { firebaseAuth, googleAuthProvider } from '../config/firebase';
 const Login = () => {
+  const hadleLogin = async () => {
+    try {
+      const result = await signInWithPopup(firebaseAuth, googleAuthProvider);
+      console.log('Usuário logado:', result.user);
+    } catch (error) {
+      console.error('Erro ao fazer login com o Google:', error);
+    }
+  };
+
   return (
-    <body className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-200 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <header className="text-center">
           <h1 className="text-3xl font-extrabold text-center text-gray-900">DevBills</h1>
@@ -10,19 +21,29 @@ const Login = () => {
             Gerencie suas financas de uma maneira simples
           </p>
         </header>
-        <main>
+
+        <main className="mt-8 bg-witge py-8 px-4 shadow-md rounded-lg sm:px-10 spacey-y-6">
           <section>
-            <h2>realize seu login para continuar</h2>
-            <p>Acesse sua conta e comece a gerenciar suas finaças</p>
+            <h2 className="text-lg font-medium text-gray-900">realize seu login para continuar</h2>
+            <p className="mt-1 text-sm text-gray-600 mb-8">
+              Acesse sua conta e comece a gerenciar suas finaças
+            </p>
           </section>
 
-          <GoogleLoginButton isLoading={false} onClick={() => {}} />
-          <footer>
-            <p>Ao continuar, você aceita nossos termos de uso e política de privacidade</p>
+          <GoogleLoginButton
+            isLoading={false}
+            onClick={() => {
+              hadleLogin();
+            }}
+          />
+          <footer className="mt-6 text-center text-xs text-gray-500">
+            <p className="mt-1 text-sm text-gray-600 text-center">
+              Ao continuar, você aceita nossos termos de uso e política de privacidade
+            </p>
           </footer>
         </main>
       </div>
-    </body>
+    </div>
   );
 };
 
