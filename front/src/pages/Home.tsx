@@ -1,6 +1,8 @@
 import { CreditCard, List, TrendingUp, Wallet } from 'lucide-react';
 import type { JSX } from 'react';
+import { useNavigate } from 'react-router';
 import Button from '../components/Button';
+import { flashAndNavigate } from '../utils/loginFlashBang';
 
 interface Feature {
   icon: JSX.Element;
@@ -9,6 +11,8 @@ interface Feature {
 }
 
 function Home() {
+  const navigate = useNavigate();
+
   const features: ReadonlyArray<Feature> = [
     {
       icon: <Wallet className="w-8 h-8 text-primary-700" />,
@@ -46,11 +50,17 @@ function Home() {
                 Gerencie suas finanças com o <span className="text-primary-500">DevBills</span>
               </h1>
               <p className="text-lg text-white mb-8">
-                Uma plataforma simples e eficiente pra controlar suas despesas e receitas. organize
+                Uma plataforma simples e eficiente pra controlar suas despesas e receitas. Organize
                 suas finanças de forma prática e intuitiva.
               </p>
               <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                <Button className="text-center px-6 py-3">Começar Agora</Button>
+                <Button
+                  onClick={() => {
+                    flashAndNavigate(() => navigate('/login'));
+                  }}
+                >
+                  Começar agora
+                </Button>
               </div>
             </div>
           </div>
@@ -62,7 +72,7 @@ function Home() {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-white mb-4">Recursos da Plataforma</h2>
               <p className="text-lg text-white mb-8 max-w-2xl mx-auto">
-                Nesta plataforma, você tera tudo que precisa para manter suas finanças organizadas e
+                Nesta plataforma, você terá tudo que precisa para manter suas finanças organizadas e
                 em dia!
               </p>
             </div>
@@ -86,9 +96,13 @@ function Home() {
         {/* Third section */}
         <section className="py-12 md:py-20">
           <div className="bg-gray-900 p-8 rounded-xl text-center border border-gray-700">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4"></h2>
-            <p className="text-white text-opacity-90 max-w-2xl mx-auto"></p>
-            <Button className="mx-auto px-6 py-3">Criar Conta Agora</Button>
+            <Button
+              onClick={() => {
+                flashAndNavigate(() => navigate('/login'));
+              }}
+            >
+              Criar Conta Agora
+            </Button>
           </div>
         </section>
       </div>
