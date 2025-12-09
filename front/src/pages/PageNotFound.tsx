@@ -6,7 +6,7 @@ const PageNotFound = () => {
   const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gray-900">
-      <div className="flex flex-col items-center justify-center h-screen">
+      <div className="flex flex-col items-center justify-center min-h-screen overflow-hidden">
         <p className="text-6xl text-white w-screen text-center ">
           Esta página está <span className="text-primary-500">indisponível</span>
         </p>
@@ -22,7 +22,7 @@ const PageNotFound = () => {
           </h4>
         </div>
 
-        <div className="w-full flex items-center justify-center">
+        <div className="w-full flex items-center justify-center pb-15">
           <Button
             onClick={() => navigate('/')}
             type="button"

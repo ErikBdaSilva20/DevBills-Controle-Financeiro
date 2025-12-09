@@ -1,9 +1,13 @@
+import { Navigate, Outlet } from 'react-router';
+import { useAuth } from '../hooks/AuthContext';
 const PrivateRoutes = () => {
-  return (
-    <div>
-      <h1>PrivateRoutes</h1>
-    </div>
-  );
+  const { authState } = useAuth();
+
+  if (!authState.user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <Outlet />;
 };
 
 export default PrivateRoutes;

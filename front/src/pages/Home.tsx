@@ -15,7 +15,7 @@ function Home() {
 
   const features: ReadonlyArray<Feature> = [
     {
-      icon: <Wallet className="w-8 h-8 text-primary-700" />,
+      icon: <Wallet className="w-8 h-8 text-primary-700 " />,
       title: 'Controle Financeiro',
       desccription:
         'Monitore suas despesas e receitas em um só lugar, com uma interface intuitiva e fácil de usar.',
@@ -40,7 +40,7 @@ function Home() {
   ];
 
   return (
-    <div className="bg-gray-950 min-h-screen py-8 flex flex-col justify-center">
+    <div className="bg-gray-950 min-h-screen py-32 flex flex-col justify-center ">
       <div className="container-app">
         {/* First section */}
         <section className="py-12 md:-m-20">
@@ -94,8 +94,16 @@ function Home() {
         </section>
 
         {/* Third section */}
-        <section className="py-12 md:py-20">
-          <div className="bg-gray-900 p-8 rounded-xl text-center border border-gray-700">
+        <section className="py-12 md:py-20 ">
+          <div className="bg-gray-900 p-8 rounded-xl text-center border border-gray-700 flex flex-col items-center">
+            <h2 className="text-3xl font-extrabold text-white mb-4">
+              Pronto para organizar todas suas finanças?
+            </h2>
+            <p className="text-lg text-white  max-w-2xl mx-auto mb-5">
+              Comece a usar esta plataforma e tenha um controle absoluto sob seu dinheiro! É fácil
+              de utilizar.
+            </p>
+
             <Button
               onClick={() => {
                 flashAndNavigate(() => navigate('/login'));
