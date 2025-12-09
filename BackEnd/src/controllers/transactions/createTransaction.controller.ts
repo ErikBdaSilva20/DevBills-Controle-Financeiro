@@ -9,7 +9,7 @@ const createTransaction = async (
   req: FastifyRequest<{ Body: CreateTransactionBody }>,
   res: FastifyReply
 ): Promise<void> => {
-  const userID = 'JIU8325U78FUADIMISU';
+  const userID = req.userId;
 
   if (!userID) {
     return res.status(400).send({ message: 'User not authenticated' });
