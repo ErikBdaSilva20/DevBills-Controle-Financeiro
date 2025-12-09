@@ -1,15 +1,18 @@
 import dotenv from "dotenv";
-import z from "zod";
-import { number } from "zod/v4/classic/coerce.cjs";
+import z from 'zod';
 
 dotenv.config();
 
 const envSchema = z.object({
-  PORT: z.string().transform(Number).default("3001"),
-  DATABASE_URL: z.string().min(5, "Database URL is required"),
-  NODE_ENV: z.enum(["development", "test", "production"], {
-    message: "O Node ENV deve ser development, test ou production",
+  PORT: z.string().transform(Number).default('3001'),
+  DATABASE_URL: z.string().min(5, 'Database URL is required'),
+  NODE_ENV: z.enum(['development', 'test', 'production'], {
+    message: 'O Node ENV deve ser development, test ou production',
   }),
+
+  FIREBASE_PROJECT_ID: z.string().optional(),
+  FIREBASE_PRIVATE_KEY: z.string().optional(),
+  FIREBASE_CLIENT_EMAIL: z.string().optional(),
 });
 
 

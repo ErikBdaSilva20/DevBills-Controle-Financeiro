@@ -63,10 +63,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const message = error instanceof Error ? error.message : 'Error to sign in with Google';
 
       setAuthState((prev) => ({ ...prev, loading: false, error: message }));
-    } finally {
-      /* Realizar um molde para depois uma logica para abrir uma nova tela que indique que o usuario foi logado e ficara ativa por pelo menos 3 segundos*/
-
-      navigate('/');
     }
   };
 
