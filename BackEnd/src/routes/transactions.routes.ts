@@ -4,6 +4,7 @@ import createTransaction from '../controllers/transactions/createTransaction.con
 import deleteTransaction from '../controllers/transactions/DeleteTransaction.controller';
 import { GetTransactions } from '../controllers/transactions/getTransaction.controller';
 import { GetTransactionsSummary } from '../controllers/transactions/getTransactionSummary.controller';
+import { authMiddleware } from '../middlewares/auth.middleware';
 import {
   createTransactionSchema,
   deleteTransactionSchema,
@@ -13,6 +14,8 @@ import {
 
 // Rotas de transações
 const transactionsRoutes = async (fastify: FastifyInstance): Promise<void> => {
+  fastify.addHook('preHandler', authMiddleware);
+
   fastify.route({
     method: 'POST',
     url: '/',
