@@ -8,18 +8,22 @@ interface AuthContextProps {
   authState: AuthState;
   signWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
+  initialized: boolean;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
+  const [initialized, setInitialized] = useState(false);
+
   const [state, setAuthState] = useState<AuthState>({
     user: null,
     error: null,
     loading: false,
   });
 
+  // Um único useEffect para gerenciar a autenticação
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(
       firebaseAuth,
@@ -42,6 +46,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             loading: false,
           });
         }
+        setInitialized(true); // sinaliza que o Firebase já checou a sessão
       },
       (error) => {
         setAuthState({
@@ -49,8 +54,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           error: error.message,
           loading: false,
         });
+        setInitialized(true);
       }
     );
+
     return () => unsubscribe();
   }, []);
 
@@ -59,9 +66,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     try {
       await signInWithPopup(firebaseAuth, googleAuthProvider);
+      // o onAuthStateChanged vai atualizar o estado automaticamente
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Error to sign in with Google';
-
+      const message = error instanceof Error ? error.message : 'Erro ao logar com Google';
       setAuthState((prev) => ({ ...prev, loading: false, error: message }));
     }
   };
@@ -71,15 +78,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     try {
       await signOutFirebase(firebaseAuth);
-
-      setAuthState((prev) => ({ ...prev, loading: true, error: null }));
+      setAuthState({ user: null, error: null, loading: false });
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao deslogar:', error);
+      setAuthState((prev) => ({ ...prev, loading: false }));
     }
   };
 
   return (
-    <AuthContext.Provider value={{ authState: state, signWithGoogle, signOut }}>
+    <AuthContext.Provider value={{ authState: state, signWithGoogle, signOut, initialized }}>
       {children}
     </AuthContext.Provider>
   );
@@ -88,7 +95,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within a AuthProvider');
+    throw new Error('useAuth deve ser usado dentro do AuthProvider');
   }
   return context;
 };
