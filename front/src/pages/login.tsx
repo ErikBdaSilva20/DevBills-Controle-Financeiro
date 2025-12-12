@@ -6,21 +6,21 @@ import { useAuth } from '../hooks/AuthContext';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { signWithGoogle, authState } = useAuth();
+ const { authState, signWithGoogle, initialized } = useAuth();
 
-  const hadleLogin = async () => {
-    try {
-      await signWithGoogle();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+ const hadleLogin = async () => {
+   try {
+     await signWithGoogle();
+   } catch (error) {
+     console.error(error);
+   }
+ };
 
-  useEffect(() => {
-    if (authState.user && authState.loading) {
-      navigate('/dashboard');
-    }
-  }, [authState.user, authState.loading, navigate]);
+ useEffect(() => {
+   if (initialized && authState.user) {
+     navigate('/dashboard');
+   }
+ }, [initialized, authState.user, navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-200 py-12 px-4 sm:px-6 lg:px-8">
