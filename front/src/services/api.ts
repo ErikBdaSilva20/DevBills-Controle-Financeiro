@@ -1,4 +1,4 @@
-import axios, { type AxiosInstance, type InternalAxiosRequestConfig } from 'axios';
+import axios, { type AxiosInstance, type InternalAxiosRequestConfig, AxiosHeaders } from 'axios';
 import { firebaseAuth } from '../config/firebase';
 
 export const api: AxiosInstance = axios.create({
@@ -9,6 +9,7 @@ export const api: AxiosInstance = axios.create({
     language: 'pt-BR',
   },
 });
+
 api.interceptors.request.use(
   async (config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => {
     const user = firebaseAuth.currentUser;
@@ -16,7 +17,14 @@ api.interceptors.request.use(
     if (user) {
       try {
         const token = await user.getIdToken();
-        config.headers.set('Authorization', `Bearer ${token}`);
+
+        if (!config.headers) {
+          config.headers = new AxiosHeaders();
+        }
+
+        // Use o método set do AxiosHeaders
+        (config.headers as AxiosHeaders).set('Authorization', `Bearer ${token}`);
+
         console.log('Pegou token:', token);
       } catch (error) {
         console.error('Erro ao pegar token:', error);
