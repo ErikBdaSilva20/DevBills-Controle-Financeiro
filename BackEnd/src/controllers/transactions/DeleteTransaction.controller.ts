@@ -6,11 +6,11 @@ const deleteTransaction = async (
   req: FastifyRequest<{ Params: DeleteTransactionParams }>,
   res: FastifyReply
 ): Promise<void> => {
-  const userID = req.userId;
+  const userId = req.userId;
 
   const { id } = req.params;
 
-  if (!userID) {
+  if (!userId) {
     return res.status(401).send({ message: 'User not authenticated' });
   }
 
@@ -18,7 +18,7 @@ const deleteTransaction = async (
     const transaction = await prisma.transaction.findFirst({
       where: {
         id: id,
-        userId: userID,
+        userId: userId,
       },
     });
 

@@ -9,9 +9,9 @@ const createTransaction = async (
   req: FastifyRequest<{ Body: CreateTransactionBody }>,
   res: FastifyReply
 ): Promise<void> => {
-  const userID = req.userId;
+  const userId = req.userId;
 
-  if (!userID) {
+  if (!userId) {
     return res.status(400).send({ message: 'User not authenticated' });
   }
 
@@ -44,7 +44,7 @@ const createTransaction = async (
         amount: transaction.amount,
         date: parsedDate,
         type: transaction.type,
-        userId: userID,
+        userId: userId,
         categoryId: transaction.categoryId,
       },
       include: {
