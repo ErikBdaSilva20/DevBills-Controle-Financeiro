@@ -2,12 +2,14 @@ import { FastifyInstance } from 'fastify';
 import zodToJsonSchema from 'zod-to-json-schema';
 import createTransaction from '../controllers/transactions/createTransaction.controller';
 import deleteTransaction from '../controllers/transactions/DeleteTransaction.controller';
+import getHistoricalTransactions from '../controllers/transactions/getHistoricalTransactions.controller';
 import { GetTransactions } from '../controllers/transactions/getTransaction.controller';
 import { GetTransactionsSummary } from '../controllers/transactions/getTransactionSummary.controller';
 import { authMiddleware } from '../middlewares/auth.middleware';
 import {
   createTransactionSchema,
   deleteTransactionSchema,
+  getHistoricalTransactionsSchema,
   getTransactionsSchema,
   getTransactionSummarySchema,
 } from '../schemas/transactions.schema';
@@ -39,7 +41,7 @@ const transactionsRoutes = async (fastify: FastifyInstance): Promise<void> => {
 
   fastify.route({
     method: 'GET',
-    url: '/Summary',
+    url: '/summary',
     schema: {
       querystring: zodToJsonSchema(getTransactionSummarySchema),
     },
@@ -54,6 +56,17 @@ const transactionsRoutes = async (fastify: FastifyInstance): Promise<void> => {
       params: zodToJsonSchema(deleteTransactionSchema),
     },
     handler: deleteTransaction,
+  });
+
+  // Hsitorico das transações
+
+  fastify.route({
+    method: 'GET',
+    url: '/historical',
+    schema: {
+      querystring: zodToJsonSchema(getHistoricalTransactionsSchema),
+    },
+    handler: getHistoricalTransactions,
   });
 };
 

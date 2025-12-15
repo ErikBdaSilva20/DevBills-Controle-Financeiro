@@ -46,15 +46,18 @@ const getHistoricalTransactions = async (
     });
 
     type MonthlyDataItem = { name: string; income: number; expense: number };
-    const monthlyData: MonthlyDataItem[] = Array.from({ length: months }, (_, i) => {
-      const date = dayjs.utc(startDate).add(i, 'month');
+    const monthlyData: MonthlyDataItem[] = Array.from(
+      { length: months } as ArrayLike<unknown>,
+      (_, i) => {
+        const date = dayjs.utc(startDate).add(i, 'month');
 
-      return {
-        name: date.format('MMM/YYYY'),
-        income: 0,
-        expense: 0,
-      };
-    });
+        return {
+          name: date.format('MMM/YYYY'),
+          income: 0,
+          expense: 0,
+        };
+      }
+    );
 
     transactions.forEach((transaction) => {
       const monthKey = dayjs.utc(transaction.date).format('MMM/YYYY');

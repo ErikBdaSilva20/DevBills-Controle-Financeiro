@@ -40,6 +40,14 @@ export const deleteTransactionSchema = z.object({
   id: z.string().refine(isValidObjectId, { message: 'ID de transação inválido' }),
 });
 
+export const getHistoricalTransactionsSchema = z.object({
+  month: z.coerce.number().min(1).max(12),
+  year: z.coerce.number().min(2000).max(2100),
+  months: z.coerce.number().min(1).max(12).optional,
+});
+
+export type getHistoricalTransactionsQuery = z.infer<typeof getHistoricalTransactionsSchema>;
+
 export type CreateTransactionBody = z.infer<typeof createTransactionSchema>;
 
 export type GetTransactionQuerry = z.infer<typeof getTransactionsSchema>;
