@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { AuthProvider } from '../hooks/AuthContext';
 import AppLayout from '../layout/App.Layout';
+import Transactions from '../pages/AllTransactions';
 import DashBoard from '../pages/Dashboard';
 import Home from '../pages/Home';
 import Login from '../pages/login';
@@ -19,6 +20,7 @@ const AppRoutes = () => {
             <Route element={<AppLayout />} />
 
             <Route path="/dashboard" element={<DashBoard />} />
+            <Route path="/transactions" element={<Transactions />} />
           </Route>
 
           <Route path="*" element={<PageNotFound />} />
