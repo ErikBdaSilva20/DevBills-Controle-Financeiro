@@ -34,7 +34,6 @@ const DashBoard = () => {
   const [month, setMonth] = useState(currentDate.getMonth() + 1);
   const [summary, setSummary] = useState<TransactionSummary>(initialSummary);
   const [monthlyItemsData, setMonthlyItemsData] = useState<MonthlyItem[]>([]);
-
   useEffect(() => {
     async function loadTransactionsSummary() {
       const response = await getTransactionSummary(month, year);
@@ -79,7 +78,9 @@ const DashBoard = () => {
     <div className="bg-gray-900 min-h-screen px-4 sm:px-6 lg:px-12 py-6">
       {/* Cabeçalho */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-0">Dashboard</h1>
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-0 text-green-500">
+          Gráficos
+        </h1>
         <MonthYearSelect
           month={month}
           year={year}

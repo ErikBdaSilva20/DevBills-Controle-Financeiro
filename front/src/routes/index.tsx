@@ -13,16 +13,20 @@ const AppRoutes = () => {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
+          {/* Rotas públicas */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
 
+          {/* Rotas privadas */}
           <Route element={<PrivateRoutes />}>
-            <Route element={<AppLayout />} />
-
-            <Route path="/dashboard" element={<DashBoard />} />
-            <Route path="/transactions" element={<Transactions />} />
+            {/* Layout com Header e Footer */}
+            <Route element={<AppLayout />}>
+              <Route path="/dashboard" element={<DashBoard />} />
+              <Route path="/transactions" element={<Transactions />} />
+            </Route>
           </Route>
 
+          {/* Página não encontrada */}
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </AuthProvider>

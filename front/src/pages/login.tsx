@@ -13,7 +13,7 @@ const Login = () => {
      await signWithGoogle();
    } catch (error) {
      console.error(error);
-   }
+   } 
  };
 
  useEffect(() => {
