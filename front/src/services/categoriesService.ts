@@ -1,6 +1,7 @@
 import { api } from './api';
 
 export interface Category {
+  type: string;
   id: string;
   name: string;
   color: string;

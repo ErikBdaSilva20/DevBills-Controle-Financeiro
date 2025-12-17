@@ -4,7 +4,6 @@ import type {
   transactionsFilter,
   TransactionSummary,
 } from '../types/transactions';
-
 import { api } from './api';
 
 export const getTransactions = async (
@@ -12,14 +11,16 @@ export const getTransactions = async (
   year: number,
   filter?: Partial<transactionsFilter>
 ): Promise<Transaction[]> => {
-  const response = await api.get<Transaction[]>('/transactions', {
+  const response = await api.get<{ transactions: Transaction[] }>('/transactions', {
     params: {
       month,
       year,
       ...filter,
     },
   });
-  return response.data;
+
+  // Retorno garantido como um array de transações
+  return response.data.transactions;
 };
 
 export const getTransactionSummary = async (
@@ -29,11 +30,11 @@ export const getTransactionSummary = async (
 ): Promise<TransactionSummary> => {
   console.log('Front enviando:', { month, year, ...filter });
 
-  const response = await api.get('/transactions/summary', {
+  const response = await api.get<{ summary: TransactionSummary }>('/transactions/summary', {
     params: {
       month,
       year,
-      ...filter, // se não existir, não quebra
+      ...filter,
     },
   });
 
@@ -54,5 +55,11 @@ export const getTransactionMonthly = async (
       months,
     },
   });
+
   return response.data.history;
 };
+
+export const deleteTransaction = async (id: string): Promise<void> => {
+  await api.delete(`/transactions/${id}`);
+};
+
