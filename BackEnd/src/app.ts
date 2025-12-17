@@ -10,7 +10,11 @@ const app: FastifyInstance = fastify({
   },
 });
 
-app.register(cors);
+app.register(cors, {
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+});
 
 app.register(routes, { prefix: '/api' });
 app.register(transactionsRoutes, { prefix: '/transactions' });
