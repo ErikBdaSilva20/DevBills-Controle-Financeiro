@@ -26,7 +26,7 @@ export const GetTransactions = async (
     const startDate = dayjs.utc(`${year}-${month}-01`).startOf('month').toDate();
     const endtDate = dayjs.utc(startDate).endOf('month').toDate();
 
-    filter.date = { gte: startDate, lte: endtDate };
+  filter.date = { gte: startDate, lte: endtDate };
   }
 
   if (type) {
