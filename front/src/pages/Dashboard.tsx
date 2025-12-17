@@ -19,6 +19,7 @@ import MonthYearSelect from '../components/MonthYearSelect';
 import { getTransactionMonthly, getTransactionSummary } from '../services/transactionsService';
 import type { MonthlyItem, TransactionSummary } from '../types/transactions';
 import { formatCurrency } from '../utils/formateValue';
+import { formatYAxisValue } from '../utils/formatYAxisValue';
 
 const initialSummary: TransactionSummary = {
   balance: 0,
@@ -59,6 +60,20 @@ const DashBoard = () => {
   const formatToolTipValue = (value: number | string): string => {
     return formatCurrency(typeof value === 'number' ? value : parseFloat(value));
   };
+
+  async function reloadDashboardData() {
+    const [summaryResponse, monthlyResponse] = await Promise.all([
+      getTransactionSummary(month, year),
+      getTransactionMonthly(month, year, 4),
+    ]);
+
+    setSummary(summaryResponse);
+    setMonthlyItemsData(monthlyResponse);
+  }
+
+  useEffect(() => {
+    reloadDashboardData();
+  }, [month, year]);
 
   return (
     <div className="bg-gray-900 min-h-screen px-4 sm:px-6 lg:px-12 py-6">
@@ -162,7 +177,17 @@ const DashBoard = () => {
                     stroke="#48ff00"
                     tick={{ style: { textTransform: 'capitalize', fontSize: '0.75rem' } }}
                   />
-                  <YAxis stroke="#00ff80" tickFormatter={formatToolTipValue} />
+                  <YAxis
+                    stroke="#9ca3af"
+                    tickFormatter={formatYAxisValue}
+                    tickCount={5}
+                    tick={{
+                      fill: '#e5e7eb',
+                      fontSize: 12,
+                      fontWeight: 600,
+                    }}
+                    domain={[0, 'dataMax']}
+                  />
                   <Tooltip
                     formatter={formatToolTipValue}
                     contentStyle={{
@@ -185,7 +210,7 @@ const DashBoard = () => {
         </Card>
       </div>
 
-      <CreateTransaction />
+      <CreateTransaction onSuccess={reloadDashboardData} />
     </div>
   );
 };
