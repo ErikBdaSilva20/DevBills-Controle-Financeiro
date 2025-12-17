@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
-
 import { api } from '../services/api';
 import type { Category } from '../services/categoriesService';
 import { getCategories } from '../services/categoriesService';
 
-const CreateTransaction = () => {
-  const navigate = useNavigate();
+interface CreateTransactionProps {
+  onSuccess?: () => void;
+}
+
+const CreateTransaction = ({ onSuccess }: CreateTransactionProps) => {
   const [type, setType] = useState<'INCOME' | 'EXPENSE'>('EXPENSE');
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
@@ -25,7 +26,12 @@ const CreateTransaction = () => {
         console.error('Erro ao carregar categorias:', error);
       }
     }
+
     loadCategories();
+  }, []);
+
+  useEffect(() => {
+    setCategoryId('');
   }, [type]);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -38,7 +44,6 @@ const CreateTransaction = () => {
 
     try {
       setLoading(true);
-
       await api.post('/transactions', {
         description,
         amount: Number(amount),
@@ -46,6 +51,7 @@ const CreateTransaction = () => {
         categoryId,
         date, // YYYY-MM-DD → back-end trata UTC
       });
+      onSuccess?.(); // 🔥 avisa o Dashboard
       alert('Transação criada com sucesso!');
     } catch (error) {
       console.error('Erro ao criar transação:', error);
@@ -54,6 +60,17 @@ const CreateTransaction = () => {
       setLoading(false);
     }
   }
+
+  const cancelInfos = () => {
+    setDescription('');
+    setAmount('');
+    setDate('');
+    setCategoryId('');
+  };
+
+  // 🔹 Categorias filtradas pelo tipo selecionado
+  const filteredCategories = categories.filter((category) => category.type === type);
+
   return (
     <div className=" p-4 bg-gray-900  min-w-full">
       <h1 className="text-xl font-semibold mb-4 text-white text-center mt-20 border-t-2 border-gray-500 pt-8 max-w-7xl mx-auto">
@@ -93,11 +110,11 @@ const CreateTransaction = () => {
         </div>
       </div>
 
+      {/* Formulário */}
       <div className="max-w-4xl mx-auto p-6 rounded-md">
-        {/* Formulário */}
         <form
           onSubmit={handleSubmit}
-          className="space-y-4 border border-gray-300 p-4 rounded-md bg-gray-700"
+          className="space-y-4 border border-gray-500 p-4 rounded-md bg-gray-700"
         >
           {/* Descrição */}
           <div>
@@ -109,21 +126,21 @@ const CreateTransaction = () => {
               placeholder="Ex: Supermercado, Salário"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full border rounded-md px-3 py-2"
+              className="w-full border rounded-md px-3 py-2 placeholder:text-amber-50 placeholder:font-bold text-white font-bold"
             />
           </div>
 
           {/* Valor */}
           <div>
-            <label className="block text-lg font-bold mb-1 text-green-500">
+            <label className="block text-lg font-bold mb-1 text-green-500  ">
               Valor <span className="text-red-500">*</span>
             </label>
             <input
               type="number"
-              placeholder="0,00"
+              placeholder="R$ 0,00"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="w-full border rounded-md px-3 py-2"
+              className="w-full border rounded-md px-3 py-2 placeholder:text-amber-50  font-bold text-white"
             />
           </div>
 
@@ -134,27 +151,32 @@ const CreateTransaction = () => {
             </label>
             <input
               type="date"
+              max={new Date().toISOString().split('T')[0]}
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full border rounded-md px-3 py-2"
+              className="w-full border rounded-md px-3 py-2 text-gray-200 border-gray-900 font-bold"
             />
           </div>
 
           {/* Categoria */}
           <div>
-            <label className="block text-sm mb-1">
+            <label className="block text-lg mb-1 text-green-500 font-bold">
               Categoria <span className="text-red-500">*</span>
             </label>
             <select
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
-              className="block text-lg font-bold mb-1 text-green-500"
+              className="block  text-lg font-bold mb-1 text-emerald-300
+             bg-gray-900/50 rounded-md px-3 py-2
+             border-none outline-none focus:ring-0 "
             >
-              <option className="bg-gray-900" value="">
-                Selecione uma categoria
+              <option value="">
+                {type === 'EXPENSE'
+                  ? 'Selecione uma categoria de despesa'
+                  : 'Selecione uma categoria de receita'}
               </option>
 
-              {categories.map((category) => (
+              {filteredCategories.map((category) => (
                 <option key={category.id} value={category.id} className="bg-gray-800">
                   {category.name}
                 </option>
@@ -166,8 +188,8 @@ const CreateTransaction = () => {
           <div className="flex gap-2 pt-4">
             <button
               type="button"
-              onClick={() => navigate(-1)}
-              className="flex-1 border rounded-md py-2"
+              onClick={cancelInfos}
+              className="flex-1 rounded-md py-2 bg-red-900 text-white hover:cursor-pointer hover:opacity-85"
             >
               Cancelar
             </button>
@@ -175,7 +197,7 @@ const CreateTransaction = () => {
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-blue-600 text-white rounded-md py-2 disabled:opacity-50"
+              className="flex-1 bg-green-600 text-white rounded-md py-2 disabled:opacity-50 hover:cursor-pointer hover:opacity-85"
             >
               {loading ? 'Salvando...' : 'Salvar'}
             </button>
