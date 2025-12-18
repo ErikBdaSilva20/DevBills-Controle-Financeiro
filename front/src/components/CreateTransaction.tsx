@@ -112,7 +112,7 @@ const CreateTransaction = ({ onSuccess }: CreateTransactionProps) => {
         </div>
 
         {/* Formulário */}
-        <div className="max-w-4xl mx-auto p-6 rounded-md">
+        <div className="max-w-4xl mx-auto rounded-md">
           <form
             onSubmit={handleSubmit}
             className="space-y-4 border border-gray-500 p-4 rounded-md bg-gray-700"
@@ -167,9 +167,15 @@ const CreateTransaction = ({ onSuccess }: CreateTransactionProps) => {
               <select
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
-                className="block  text-lg font-bold mb-1 text-emerald-300
-             bg-gray-900/50 rounded-md px-3 py-2
-             border-none outline-none focus:ring-0 "
+                className="
+                w-full max-w-full
+                text-base font-bold text-emerald-300
+                bg-gray-900/60
+                rounded-md px-3 py-2
+                border border-gray-600
+                outline-none focus:ring-2 focus:ring-green-500
+                truncate appearance-none
+              "
               >
                 <option value="">
                   {type === 'EXPENSE'

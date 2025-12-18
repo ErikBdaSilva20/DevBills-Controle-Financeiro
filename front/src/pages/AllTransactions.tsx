@@ -37,20 +37,23 @@ const Transactions = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 px-6 py-10">
+    <div className="min-h-screen bg-gray-900 text-gray-100 px-4 sm:px-6 py-10">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
-          <h1 className="text-3xl font-medium font-serif tracking-tight mb-4 sm:mb-0 ">
-            Transações
-          </h1>
+        <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-center mb-8">
+          <h1 className="text-2xl sm:text-3xl font-medium tracking-tight">Transações</h1>
 
-          {/* Filter */}
-          <div className="flex gap-3">
+          {/* Filtros */}
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
             <select
               value={month}
               onChange={(e) => setMonth(Number(e.target.value))}
-              className="bg-gray-800 border border-gray-700 rounded-md px-4 py-2 text-sm focus:outline-none hover:ring-1 hover:ring-cyan-400 transition"
+              className="
+                bg-gray-800 border border-gray-700 rounded-md
+                px-4 py-2 text-sm
+                focus:outline-none focus:ring-1 focus:ring-cyan-400
+                transition
+              "
             >
               {Array.from({ length: 12 }).map((_, i) => (
                 <option key={i} value={i + 1} className="bg-gray-900">
@@ -62,7 +65,12 @@ const Transactions = () => {
             <select
               value={year}
               onChange={(e) => setYear(Number(e.target.value))}
-              className="bg-gray-800 border border-gray-700 rounded-md px-4 py-2 text-sm focus:outline-none hover:ring-1 hover:ring-cyan-400 transition"
+              className="
+                bg-gray-800 border border-gray-700 rounded-md
+                px-4 py-2 text-sm
+                focus:outline-none focus:ring-1 focus:ring-cyan-400
+                transition
+              "
             >
               {Array.from({ length: 4 }).map((_, i) => {
                 const y = new Date().getFullYear() - i;
@@ -87,27 +95,36 @@ const Transactions = () => {
           {filteredTransactions.map((t) => (
             <div
               key={t.id}
-              className="flex justify-between items-center bg-gray-800/50 p-4 rounded-lg hover:bg-gray-800/80 transition-all duration-300 transform hover:scale-[1.01]"
+              className="
+                flex flex-col gap-3
+                sm:flex-row sm:justify-between sm:items-center
+                bg-gray-800/50 p-4 rounded-lg
+                hover:bg-gray-800/80
+                transition-all duration-300
+              "
             >
               {/* Informações */}
               <div className="flex flex-col gap-1">
-                <span className="font-medium text-lg text-green-500">{t.description}</span>
+                <span className="font-medium text-base sm:text-lg text-green-500">
+                  {t.description}
+                </span>
 
-                <div>
-                  <span className="text-sm text-gray-400 mr-2">
-                    {dayjs(t.date).format('DD/MM/YYYY')}
-                  </span>
+                <div className="text-sm">
+                  <span className="text-gray-400 mr-2">{dayjs(t.date).format('DD/MM/YYYY')}</span>
                   <span style={{ color: t.category.color }}>• {t.category.name}</span>
                 </div>
               </div>
 
-              {/* Valores e ações */}
-              <div className="flex items-center gap-6">
+              {/* Valor e ações */}
+              <div
+                className="
+                flex justify-between items-center
+                sm:justify-end sm:gap-6
+              "
+              >
                 <span
-                  className={`font-semibold text-lg transition-colors duration-200 ${
-                    t.type === 'INCOME'
-                      ? 'text-green-400 hover:text-green-500'
-                      : 'text-red-400 hover:text-red-500'
+                  className={`font-semibold text-base sm:text-lg ${
+                    t.type === 'INCOME' ? 'text-green-400' : 'text-red-400'
                   }`}
                 >
                   {t.type === 'INCOME' ? '+' : '-'} {formatCurrency(t.amount)}
