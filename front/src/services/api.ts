@@ -24,11 +24,7 @@ api.interceptors.request.use(
 
         // Use o método set do AxiosHeaders
         (config.headers as AxiosHeaders).set('Authorization', `Bearer ${token}`);
-
-        console.log('Pegou token:', token);
-      } catch (error) {
-        console.error('Erro ao pegar token:', error);
-      }
+      } catch (error) {}
     }
 
     return config;

@@ -28,8 +28,6 @@ export const getTransactionSummary = async (
   year: number,
   filter?: Partial<transactionsFilter>
 ): Promise<TransactionSummary> => {
-  console.log('Front enviando:', { month, year, ...filter });
-
   const response = await api.get<{ summary: TransactionSummary }>('/transactions/summary', {
     params: {
       month,
@@ -37,8 +35,6 @@ export const getTransactionSummary = async (
       ...filter,
     },
   });
-
-  console.log('Front recebeu:', response.data);
 
   return response.data.summary;
 };
