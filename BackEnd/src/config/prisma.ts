@@ -3,12 +3,9 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const prismaConnect = async () => {
-  try{
-    await prisma.$connect()
-  console.log("DB connected")
-  } catch (err) {
-    console.log(err)
-  }
+  try {
+    await prisma.$connect();
+  } catch (err) {}
 }
 
 export default prisma

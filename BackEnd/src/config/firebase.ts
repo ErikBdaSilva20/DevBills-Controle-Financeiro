@@ -18,7 +18,6 @@ const initializeFirebaseAdmin = (): void => {
       }),
     });
   } catch (error) {
-    console.log(error);
     process.exit(1);
   }
 };

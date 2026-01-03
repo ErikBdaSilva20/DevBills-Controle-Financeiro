@@ -18,7 +18,6 @@ export const authMiddleware = async (req: FastifyRequest, res: FastifyReply): Pr
 
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
-console.log('UID do token recebido:', decodedToken.uid); // <- adicione isso
 req.userId = decodedToken.uid;
 
   } catch (error) {

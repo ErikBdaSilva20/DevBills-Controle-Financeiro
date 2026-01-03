@@ -9,17 +9,13 @@ const PORT = env.PORT;
 initializeFirebaseAdmin();
 const startServer = async () => {
   try {
-    await prismaConnect() 
+    await prismaConnect();
 
-    await initializeGlobalCategories()
-    
-    await app
-      .listen({
-        port: Number(process.env.PORT) || 3001,
-      })
-      .then(() => {
-        console.log(`Server running on port ${process.env.PORT}`);
-      });
+    await initializeGlobalCategories();
+
+    await app.listen({
+      port: Number(process.env.PORT) || 3001,
+    });
   } catch (err) {
     app.log.error(err);
   }

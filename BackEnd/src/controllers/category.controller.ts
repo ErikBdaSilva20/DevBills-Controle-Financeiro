@@ -6,12 +6,11 @@ export const getCategories = async (req: FastifyRequest, res: FastifyReply): Pro
 
   try {
     const categories: Category[] = await prisma.category.findMany({
-      orderBy: { name: 'asc' }
-    })
+      orderBy: { name: 'asc' },
+    });
 
-    res.send(categories)
+    res.send(categories);
   } catch (err) {
-    console.log(err)
-    res.status(500).send(err)
+    res.status(500).send(err);
   }
 } 

@@ -53,7 +53,6 @@ export const GetTransactions = async (
     });
     res.send({ transactions });
   } catch (error) {
-    console.error('Error fetching transactions:', error);
     res.status(500).send({ message: 'Internal server error' });
   }
 };
