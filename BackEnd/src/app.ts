@@ -1,17 +1,17 @@
 import cors from '@fastify/cors';
 import fastify, { type FastifyInstance } from 'fastify';
-import { env } from 'process';
-import routes from './routes';
-import transactionsRoutes from './routes/transactions.routes';
+import { env } from './config/env.js';
+import routes from './routes/index.js';
+import transactionsRoutes from './routes/transactions.routes.js';
 
 const app: FastifyInstance = fastify({
   logger: {
-    level: env.NODE_ENV === 'development' ? 'info' : 'error',
+    level: process.env.NODE_ENV === 'development' ? 'info' : 'error',
   },
 });
 
 app.register(cors, {
-  origin: 'http://localhost:5173',
+  origin: env.ALLOWED_ORIGIN,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 });
