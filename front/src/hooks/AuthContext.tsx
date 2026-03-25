@@ -1,6 +1,5 @@
 import { onAuthStateChanged, signInWithPopup, signOut as signOutFirebase } from 'firebase/auth';
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { useNavigate } from 'react-router';
 import { firebaseAuth, googleAuthProvider } from '../config/firebase';
 import type { AuthState } from '../types/auth';
 
