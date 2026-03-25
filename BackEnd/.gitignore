@@ -75,3 +75,6 @@ temp/
 *.key
 *.crt
 uploads/
+
+
+fireBaseServiceAccount.json
