@@ -14,10 +14,10 @@ const startServer = async () => {
     await initializeGlobalCategories();
 
     await app.listen({
-      port: Number(process.env.PORT) || 3001,
+      port: env.PORT,
       host: '0.0.0.0',
     });
-    console.log(`HTTP server running on port ${process.env.PORT || 3001}! 🚀`);
+    console.log(`HTTP server running on port ${env.PORT}! 🚀`);
   } catch (err) {
     app.log.error(err);
   }
