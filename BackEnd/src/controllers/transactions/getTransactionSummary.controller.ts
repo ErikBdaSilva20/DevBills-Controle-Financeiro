@@ -1,6 +1,6 @@
 import { TransactionType } from '@prisma/client';
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
+import utc from 'dayjs/plugin/utc.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import prisma from '../../config/prisma';
 import type { getTransactionSummaryQuerry } from '../../schemas/transactions.schema';

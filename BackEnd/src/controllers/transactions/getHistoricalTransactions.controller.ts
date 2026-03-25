@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br.js';
-import utc from 'dayjs/plugin/utc';
+import utc from 'dayjs/plugin/utc.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import prisma from '../../config/prisma';
 import { getHistoricalTransactionsQuery } from '../../schemas/transactions.schema';
