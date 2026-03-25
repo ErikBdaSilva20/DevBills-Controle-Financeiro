@@ -4,7 +4,7 @@ import z from 'zod';
 dotenv.config();
 
 const envSchema = z.object({
-  PORT: z.string().transform(Number).default('3001'),
+  PORT: z.coerce.number().default(3001),
   DATABASE_URL: z.string().min(5, 'Database URL is required'),
   NODE_ENV: z.enum(['development', 'test', 'production'], {
     message: 'O Node ENV deve ser development, test ou production',
