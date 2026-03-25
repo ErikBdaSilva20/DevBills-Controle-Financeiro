@@ -124,10 +124,10 @@ const Transactions = () => {
               >
                 <span
                   className={`font-semibold text-base sm:text-lg ${
-                    t.type === 'INCOME' ? 'text-green-400' : 'text-red-400'
+                    t.type === 'income' ? 'text-green-400' : 'text-red-400'
                   }`}
                 >
-                  {t.type === 'INCOME' ? '+' : '-'} {formatCurrency(t.amount)}
+                  {t.type === 'income' ? '+' : '-'} {formatCurrency(t.amount)}
                 </span>
 
                 <button

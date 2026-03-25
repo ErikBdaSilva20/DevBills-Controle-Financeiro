@@ -14,7 +14,6 @@ interface AuthContextProps {
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const navigate = useNavigate();
   const [initialized, setInitialized] = useState(false);
 
   const [state, setAuthState] = useState<AuthState>({
