@@ -29,6 +29,7 @@ const initializeFirebaseAdmin = (): void => {
       });
     }
   } catch (error) {
+    console.error('❌ Failed to initialize Firebase:', error);
     process.exit(1);
   }
 };
