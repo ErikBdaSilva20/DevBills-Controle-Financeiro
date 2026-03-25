@@ -59,7 +59,7 @@ const getHistoricalTransactions = async (
       }
     );
 
-    transactions.forEach((transaction) => {
+    transactions.forEach((transaction: { date: Date | string; type: string; amount: number }) => {
       const monthKey = dayjs.utc(transaction.date).format('MMM/YYYY');
       const monthData = monthlyData.find((m) => m.name === monthKey);
 
