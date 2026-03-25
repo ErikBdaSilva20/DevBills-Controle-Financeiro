@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/server.ts",
-    "build": "prisma generate && esbuild src/server.ts --bundle --platform=node --format=esm --external:@prisma/client --external:firebase-admin --external:mongodb --external:fastify --external:@fastify/cors --outfile=dist/server.js",
+    "build": "prisma generate && esbuild src/server.ts --bundle --platform=node --format=esm --packages=external --outfile=dist/server.js",
     "start": "node dist/server.js"
   },
   "keywords": [],
