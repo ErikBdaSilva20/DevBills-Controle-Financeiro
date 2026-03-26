@@ -25,7 +25,8 @@ export const GetTransactionsSummary = async (
           return res.status(400).send({ message: 'Month and year are required' });
         }
 
-        const startDate = dayjs.utc(`${year}-${month}-01`).startOf('month').toDate();
+        const formattedMonth = String(month).padStart(2, '0');
+        const startDate = dayjs.utc(`${year}-${formattedMonth}-01`).startOf('month').toDate();
         const endtDate = dayjs.utc(startDate).endOf('month').toDate();
 
         try {

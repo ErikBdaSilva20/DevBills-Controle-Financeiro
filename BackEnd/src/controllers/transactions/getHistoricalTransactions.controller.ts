@@ -19,7 +19,7 @@ const getHistoricalTransactions = async (
 
   const { month, year, months = 6 } = req.query;
 
-  const baseDate = new Date(year, month - 1, 1);
+  const baseDate = new Date(Date.UTC(year, month - 1, 1));
 
   const startDate = dayjs
     .utc(baseDate)
