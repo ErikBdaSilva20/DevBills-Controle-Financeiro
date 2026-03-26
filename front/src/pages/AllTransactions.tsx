@@ -20,13 +20,8 @@ const Transactions = () => {
   }, [month, year]);
 
   const filteredTransactions = useMemo(() => {
-    return transactions
-      .filter((t) => {
-        const date = dayjs(t.date);
-        return date.month() + 1 === month && date.year() === year;
-      })
-      .sort((a, b) => dayjs(b.date).unix() - dayjs(a.date).unix());
-  }, [transactions, month, year]);
+    return [...transactions].sort((a, b) => dayjs(b.date).unix() - dayjs(a.date).unix());
+  }, [transactions]);
 
   async function handleDeleteTransaction(id: string) {
     const confirmDelete = window.confirm('Deseja excluir esta transação?');
