@@ -7,7 +7,7 @@ const isValidObjectId = (id: string) => ObjectId.isValid(id);
 export const createTransactionSchema = z.object({
   description: z.string().min(1, 'Descrição obrigatória').max(100, 'Descrição muito longa'),
   amount: z.coerce.number().positive('Valor deve ser positivo'),
-  date: z.coerce.date({ message: 'Data inválida' }),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Data inválida. Use o formato YYYY-MM-DD'),
   categoryId: z.string().refine(isValidObjectId, { message: 'Categoria inválida' }),
   type: z.enum(['EXPENSE', 'INCOME'], { message: 'Tipo inválido' }),
 });

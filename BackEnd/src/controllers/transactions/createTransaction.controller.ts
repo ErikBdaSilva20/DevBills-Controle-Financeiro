@@ -39,7 +39,8 @@ const createTransaction = async (
       return res.status(404).send({ message: 'Category invalid' });
     }
 
-    const parsedDate = new Date(transaction.date);
+    // Usa T12:00:00Z para evitar que o fuso brasileiro (UTC-3) cause regressão de dia
+    const parsedDate = new Date(`${transaction.date}T12:00:00.000Z`);
 
     const newTransaction = await prisma.transaction.create({
       data: {
