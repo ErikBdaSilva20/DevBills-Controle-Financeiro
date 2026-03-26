@@ -9,8 +9,8 @@ export const getCategories = async (req: FastifyRequest, res: FastifyReply): Pro
       orderBy: { name: 'asc' },
     });
 
-    res.send(categories);
+    res.send({ categories });
   } catch (err) {
-    res.status(500).send(err);
+    res.status(500).send({ message: 'Erro ao buscar categorias', error: err });
   }
 } 

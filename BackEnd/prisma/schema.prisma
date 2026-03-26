@@ -8,8 +8,8 @@ datasource db {
 }
 
 enum TransactionType {
-  INCOME // Despesa 
-  EXPENSE // entrada
+  INCOME // Receita
+  EXPENSE // Despesa
 }
 
 model Category {

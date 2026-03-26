@@ -1,8 +1,8 @@
 import type { Category, categorySummary } from './category';
 
 export const TransactionType = {
-  EXPENSE: 'expense',
-  INCOME: 'income',
+  EXPENSE: 'EXPENSE',
+  INCOME: 'INCOME',
 } as const;
 
 export type TransactionType = (typeof TransactionType)[keyof typeof TransactionType];

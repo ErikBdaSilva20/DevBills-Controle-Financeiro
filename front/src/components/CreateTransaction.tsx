@@ -69,7 +69,9 @@ const CreateTransaction = ({ onSuccess }: CreateTransactionProps) => {
   };
 
   // 🔹 Categorias filtradas pelo tipo selecionado
-  const filteredCategories = categories.filter((category) => category.type === type);
+  const filteredCategories = categories.filter(
+    (category) => category.type.toUpperCase() === type.toUpperCase()
+  );
 
   return (
     <>
@@ -174,10 +176,10 @@ const CreateTransaction = ({ onSuccess }: CreateTransactionProps) => {
                 rounded-md px-3 py-2
                 border border-gray-600
                 outline-none focus:ring-2 focus:ring-green-500
-                truncate appearance-none
+                truncate 
               "
               >
-                <option value="">
+                <option value="" className="bg-gray-800">
                   {type === 'EXPENSE'
                     ? 'Selecione uma categoria de despesa'
                     : 'Selecione uma categoria de receita'}
