@@ -4,7 +4,6 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "lib": ["ES2022"],
-    "rootDir": "src",
     "outDir": "dist",
     "resolveJsonModule": true, // Permite importar arquivos .json como módulos (útil para config, Firebase etc)
     "esModuleInterop": true, // Permite usar `import express from 'express'` com libs que usam exportação CommonJS
@@ -16,7 +15,9 @@
     "noImplicitOverride": true // Garante que ao sobrescrever métodos, você use a palavra-chave `override` (mais seguro)
   },
   "include": [
-    "src"
+    "src",
+    "prisma",
+    "prisma.config.ts"
   ], // Apenas os arquivos dentro da pasta `src` serão analisados
   "exclude": [
     "node_modules",
