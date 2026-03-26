@@ -21,8 +21,8 @@ const createTransaction = async (
     console.error('❌ Validation error details:', errorDetails);
     
     return res.status(400).send({ 
-      error: 'Dados inválidos na transação',
-      details: errorDetails.fieldErrors 
+      message: 'Dados inválidos na transação',
+      errors: errorDetails.fieldErrors 
     });
   }
 
