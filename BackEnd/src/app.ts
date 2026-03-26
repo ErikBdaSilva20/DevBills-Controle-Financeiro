@@ -11,7 +11,23 @@ const app: FastifyInstance = fastify({
 });
 
 app.register(cors, {
-  origin: env.ALLOWED_ORIGIN,
+  origin: (origin, cb) => {
+    if (!origin || env.ALLOWED_ORIGIN === '*') {
+      cb(null, true);
+      return;
+    }
+    
+    // Remove barras finais para comparação justa
+    const normalizedOrigin = origin.replace(/\/$/, '');
+    const allowed = env.ALLOWED_ORIGIN.split(',').map(o => o.trim().replace(/\/$/, ''));
+
+    if (allowed.includes(normalizedOrigin)) {
+      cb(null, true);
+      return;
+    }
+    
+    cb(new Error('Not allowed by CORS'), false);
+  },
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 });
