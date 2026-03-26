@@ -16,11 +16,14 @@ const createTransaction = async (
   }
 
   const result = createTransactionSchema.safeParse(req.body);
-
   if (!result.success) {
-    const errorMessage = result.error.issues?.[0]?.message || 'Validation invalid';
-
-    return res.status(400).send({ error: errorMessage });
+    const errorDetails = result.error.flatten();
+    console.error('❌ Validation error details:', errorDetails);
+    
+    return res.status(400).send({ 
+      error: 'Dados inválidos na transação',
+      details: errorDetails.fieldErrors 
+    });
   }
 
   const transaction = result.data;
